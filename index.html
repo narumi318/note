@@ -504,229 +504,6 @@
         }
 
         /* =========================================
-           8. Categories
-           ========================================= */
-        .categories {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .categories .section-title-animated {
-            -webkit-text-fill-color: white;
-            background: linear-gradient(90deg,
-                    white 0%,
-                    var(--accent-color) 25%,
-                    white 50%,
-                    var(--accent-color) 75%,
-                    white 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: shimmer 4s linear infinite;
-        }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .category-item {
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
-            padding-top: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .category-item:hover {
-            border-top-color: var(--accent-color);
-            transform: translateY(-8px);
-        }
-
-        .category-item h3 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .category-item p {
-            color: #bdc3c7;
-            font-size: 16px;
-            line-height: 1.7;
-        }
-
-        /* =========================================
-           9. Join Us
-           ========================================= */
-        .join-us {
-            text-align: center;
-            background-color: var(--gray-bg);
-            padding: 100px 5%;
-        }
-
-        .join-us h2 {
-            font-size: clamp(32px, 5vw, 56px);
-            font-weight: 900;
-            margin-bottom: 20px;
-            letter-spacing: -2px;
-        }
-
-        .btn-large {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            font-size: 20px;
-            font-weight: 700;
-            padding: 24px 70px;
-            border-radius: 50px;
-            margin-top: 40px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-large:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(65, 201, 180, 0.3);
-        }
-
-        /* =========================================
-           10. コメント欄（チャット風）
-           ========================================= */
-        .comment-section {
-            background-color: var(--bg-color);
-            padding: 100px 10%;
-        }
-
-        .comment-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .comment-list {
-            max-height: 500px;
-            overflow-y: auto;
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: var(--gray-bg);
-            border-radius: 16px;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-        }
-
-        /* スクロールバーのデザイン */
-        .comment-list::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .comment-list::-webkit-scrollbar-thumb {
-            background-color: #ccc;
-            border-radius: 3px;
-        }
-
-        .comment-bubble {
-            background-color: white;
-            padding: 16px 20px;
-            border-radius: 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            animation: commentSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes commentSlide {
-            0% {
-                opacity: 0;
-                transform: translateY(16px) scale(0.97);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .comment-name {
-            font-weight: 700;
-            font-size: 14px;
-            color: var(--accent-color);
-            margin-bottom: 6px;
-        }
-
-        .comment-text {
-            font-size: 15px;
-            line-height: 1.6;
-            color: var(--text-color);
-        }
-
-        .comment-time {
-            font-size: 11px;
-            color: #aaa;
-            margin-top: 8px;
-        }
-
-        .comment-empty {
-            text-align: center;
-            padding: 60px 20px;
-            color: #aaa;
-            font-size: 15px;
-        }
-
-        /* コメント入力フォーム */
-        .comment-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .comment-form input,
-        .comment-form textarea {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid rgba(0, 0, 0, 0.08);
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 15px;
-            transition: border-color 0.3s;
-            outline: none;
-            background-color: var(--gray-bg);
-        }
-
-        .comment-form input:focus,
-        .comment-form textarea:focus {
-            border-color: var(--accent-color);
-            background-color: white;
-        }
-
-        .comment-form textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .comment-submit {
-            align-self: flex-end;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 14px 40px;
-            border-radius: 40px;
-            font-size: 15px;
-            font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .comment-submit:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(65, 201, 180, 0.3);
-        }
-
-        .comment-submit:active {
-            transform: scale(0.97);
-        }
-
-        /* =========================================
            11. フッター
            ========================================= */
         footer {
@@ -770,10 +547,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .category-item {
-                padding-top: 20px;
-            }
-
             .btn-large {
                 padding: 18px 50px;
                 font-size: 16px;
@@ -788,10 +561,6 @@
                 font-size: 32px;
                 margin-bottom: 40px;
             }
-
-            .comment-section {
-                padding: 60px 6%;
-            }
         }
     </style>
 </head>
@@ -805,8 +574,9 @@
             <!-- ナビゲーションタブ -->
             <nav class="nav-tabs">
                 <a href="#mission" class="nav-tab">Mission</a>
+                <a href="#profile" class="nav-tab">Profile</a>
                 <a href="#pickup" class="nav-tab">Pick Up</a>
-                <a href="#categories" class="nav-tab">Categories</a>
+                <a href="https://note.com/enu_318_/all" target="_blank" class="nav-tab">Note</a>
             </nav>
         </div>
         <a href="https://note.com/enu_318_/all" target="_blank" class="header-btn">noteを読む</a>
@@ -828,6 +598,57 @@
     </section>
 
     <!-- 3. Missionセクション -->
+    <section class="profile" id="profile">
+        <style>
+            .profile {
+                background-color: var(--bg-color);
+                padding: 80px 10%;
+            }
+
+            .profile-content {
+                text-align: center;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .profile-img {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-bottom: 24px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .profile-name {
+                font-size: 28px;
+                font-weight: 900;
+                margin-bottom: 12px;
+                color: var(--primary-color);
+            }
+
+            .profile-text {
+                font-size: 16px;
+                line-height: 1.8;
+                color: #555;
+                text-align: left;
+            }
+        </style>
+        <h2 class="section-title-animated fade-in">Profile</h2>
+        <div class="profile-content fade-in" style="transition-delay: 0.1s;">
+            <!-- プロフィール画像がある場合はsrcに指定してください -->
+            <!-- <img src="profile.jpg" alt="eNu" class="profile-img"> -->
+            <div class="profile-name">eNu</div>
+            <p class="profile-text">
+                一人の会社員として混迷する社会情勢を分析し、夜は孤独や救いを探求するエッセイや小説を綴ります。<br>
+                知的な刺激と、静寂に溶け出す言葉を求めるあなたへ。<br>
+                明日の景色が少し違って見えるような思考の記録。<br>
+                夜に寄り添う、静かな救いを。
+            </p>
+        </div>
+    </section>
+
+    <!-- 3.5 Missionセクション -->
     <section class="mission" id="mission">
         <h2 class="section-title-animated fade-in">Mission</h2>
         <p class="mission-text fade-in" style="transition-delay: 0.1s;">
@@ -841,10 +662,31 @@
     <!-- 4. Pick Upセクション（おすすめ記事4つ） -->
     <section class="pickup" id="pickup">
         <h2 class="section-title-animated fade-in">Pick Up</h2>
+
         <div class="pickup-grid">
 
+            <!-- 最新記事1（JSで動的に書き換えます） -->
+            <div class="pickup-card fade-in" id="latest-article-1">
+                <div class="pickup-card-header">
+                    <span class="pickup-card-label">最新記事</span>
+                </div>
+                <h3 class="pickup-card-title">読み込み中...</h3>
+                <p class="pickup-card-desc">最新の記事を取得しています。</p>
+                <a href="https://note.com/enu_318_/all" target="_blank" class="pickup-card-link">記事を読む →</a>
+            </div>
+
+            <!-- 最新記事2（JSで動的に書き換えます） -->
+            <div class="pickup-card fade-in" style="transition-delay: 0.1s;" id="latest-article-2">
+                <div class="pickup-card-header">
+                    <span class="pickup-card-label">最新記事</span>
+                </div>
+                <h3 class="pickup-card-title">読み込み中...</h3>
+                <p class="pickup-card-desc">最新の記事を取得しています。</p>
+                <a href="https://note.com/enu_318_/all" target="_blank" class="pickup-card-link">記事を読む →</a>
+            </div>
+
             <!-- 記事1：中編小説『四月の残響』 -->
-            <div class="pickup-card fade-in">
+            <div class="pickup-card fade-in" style="transition-delay: 0.2s;">
                 <div class="pickup-card-header">
                     <span class="pickup-card-label">小説</span>
                 </div>
@@ -854,7 +696,7 @@
             </div>
 
             <!-- 記事2：エッセイ『弱音を吐けないまま大人になった僕へ』 -->
-            <div class="pickup-card fade-in" style="transition-delay: 0.1s;">
+            <div class="pickup-card fade-in" style="transition-delay: 0.3s;">
                 <div class="pickup-card-header">
                     <span class="pickup-card-label">エッセイ</span>
                 </div>
@@ -864,7 +706,7 @@
             </div>
 
             <!-- 記事3：依存を恐れながら依存してしまう私たちへ -->
-            <div class="pickup-card fade-in" style="transition-delay: 0.2s;">
+            <div class="pickup-card fade-in" style="transition-delay: 0.4s;">
                 <div class="pickup-card-header">
                     <span class="pickup-card-label">考察・思想</span>
                 </div>
@@ -874,7 +716,7 @@
             </div>
 
             <!-- 記事4：エッセイ『心は効率化できない』 -->
-            <div class="pickup-card fade-in" style="transition-delay: 0.3s;">
+            <div class="pickup-card fade-in" style="transition-delay: 0.5s;">
                 <div class="pickup-card-header">
                     <span class="pickup-card-label">エッセイ</span>
                 </div>
@@ -886,60 +728,15 @@
         </div>
     </section>
 
-    <!-- 5. Categoriesセクション -->
-    <section class="categories" id="categories">
-        <h2 class="section-title-animated fade-in">Categories</h2>
-        <div class="category-grid">
-            <div class="category-item fade-in">
-                <h3>エッセイ</h3>
-                <p>日常の中で感じたこと、気づきを丁寧な言葉で紡ぎ、共感を生むストーリーを届けます。</p>
-            </div>
-            <div class="category-item fade-in" style="transition-delay: 0.1s;">
-                <h3>小説</h3>
-                <p>日常の延長線上にある物語や、心に響く言葉を綴った創作小説をお届けします。</p>
-            </div>
-            <div class="category-item fade-in" style="transition-delay: 0.2s;">
-                <h3>書評</h3>
-                <p>小説から実用書まで。一冊の本から得た有益な知見や感情を、独自の視点で共有します。</p>
-            </div>
-            <div class="category-item fade-in" style="transition-delay: 0.3s;">
-                <h3>政治・歴史</h3>
-                <p>過去の出来事から現在を読み解き、複雑な事象をシンプルかつ論理的な視点で整理します。</p>
-            </div>
-            <div class="category-item fade-in" style="transition-delay: 0.4s;">
-                <h3>考察・思想</h3>
-                <p>物事の本質は何か。当たり前を疑い、様々な角度から深く思考を巡らせる記事です。</p>
-            </div>
-        </div>
-    </section>
-
     <!-- 6. Join Usセクション -->
     <section class="join-us">
         <h2 class="fade-in">すべての記事を読む</h2>
         <p class="fade-in" style="transition-delay: 0.1s; color: #555; font-size: 18px;">
-            noteにて、より深く、より多くの記事を定期的に公開しています。</p>
+            noteにて、より深く、より多くの記事を定期的に公開しています。<br>
+            感想やコメントもnoteでお待ちしています！
+        </p>
         <div class="fade-in" style="transition-delay: 0.2s;">
             <a href="https://note.com/enu_318_/all" target="_blank" class="btn-large">noteへ移動する</a>
-        </div>
-    </section>
-
-    <!-- 7. コメント欄（チャット機能） -->
-    <section class="comment-section" id="comments">
-        <h2 class="section-title-animated fade-in">Comments</h2>
-        <div class="comment-container">
-            <!-- コメント一覧（チャット風にメッセージが並ぶ場所） -->
-            <div class="comment-list" id="commentList">
-                <div class="comment-empty" id="commentEmpty">
-                    まだコメントはありません。<br>最初のコメントを書いてみましょう！
-                </div>
-            </div>
-
-            <!-- コメント入力フォーム -->
-            <div class="comment-form" id="commentForm">
-                <input type="text" id="commentName" placeholder="名前（ニックネーム）" maxlength="30">
-                <textarea id="commentText" placeholder="コメントを入力してください..." maxlength="500"></textarea>
-                <button class="comment-submit" onclick="postComment()">コメントを送信</button>
-            </div>
         </div>
     </section>
 
@@ -1028,97 +825,47 @@
             });
 
             // =============================================
-            // 【3】保存済みのコメントを読み込む
+            // 【3】noteの最新記事を取得する（RSS2JSON API使用）
             // =============================================
-            loadComments();
+            const noteRssUrl = 'https://note.com/enu_318_/rss';
+            // RSSをJSONに変換するパブリックAPI（制限を避けるためrss2jsonを使用）
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(noteRssUrl)}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'ok' && data.items && data.items.length >= 2) {
+                        // 1件目の最新記事をセット
+                        const item1 = data.items[0];
+                        const card1 = document.getElementById('latest-article-1');
+                        if (card1) {
+                            card1.querySelector('.pickup-card-title').textContent = item1.title;
+                            // 本文からHTMLタグを除去し、短くカットして概要にする
+                            let desc1 = item1.description.replace(/<[^>]+>/g, '').trim();
+                            desc1 = desc1.length > 50 ? desc1.substring(0, 50) + '...' : desc1;
+                            card1.querySelector('.pickup-card-desc').textContent = desc1;
+                            card1.querySelector('.pickup-card-link').href = item1.link;
+                        }
+
+                        // 2件目の最新記事をセット
+                        const item2 = data.items[1];
+                        const card2 = document.getElementById('latest-article-2');
+                        if (card2) {
+                            card2.querySelector('.pickup-card-title').textContent = item2.title;
+                            let desc2 = item2.description.replace(/<[^>]+>/g, '').trim();
+                            desc2 = desc2.length > 50 ? desc2.substring(0, 50) + '...' : desc2;
+                            card2.querySelector('.pickup-card-desc').textContent = desc2;
+                            card2.querySelector('.pickup-card-link').href = item2.link;
+                        }
+                    } else {
+                        console.error('RSSデータの取得に失敗しました', data);
+                        // 取得失敗時のフォールバック処理が必要な場合はここに記述
+                    }
+                })
+                .catch(error => {
+                    console.error('RSSの取得エラー:', error);
+                });
         });
-
-        // =============================================
-        // 【4】コメント機能（ローカルストレージに保存）
-        // =============================================
-
-        // コメントを投稿する関数
-        function postComment() {
-            const nameInput = document.getElementById('commentName');
-            const textInput = document.getElementById('commentText');
-
-            // 名前とコメントの入力チェック
-            const name = nameInput.value.trim() || '匿名';
-            const text = textInput.value.trim();
-
-            if (!text) {
-                // コメントが空の場合は何もしない
-                textInput.style.borderColor = '#ff6b6b';
-                setTimeout(() => {
-                    textInput.style.borderColor = 'rgba(0,0,0,0.08)';
-                }, 1500);
-                return;
-            }
-
-            // 現在時刻を取得して表示用にフォーマットする
-            const now = new Date();
-            const timeStr = `${now.getFullYear()}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-
-            // コメントデータを作成
-            const comment = { name, text, time: timeStr };
-
-            // ローカルストレージに保存
-            const comments = getComments();
-            comments.push(comment);
-            localStorage.setItem('enu_comments', JSON.stringify(comments));
-
-            // コメントを画面に追加表示
-            addCommentToDOM(comment);
-
-            // 入力フォームをクリア
-            nameInput.value = '';
-            textInput.value = '';
-        }
-
-        // ローカルストレージからコメントを取得する関数
-        function getComments() {
-            const data = localStorage.getItem('enu_comments');
-            return data ? JSON.parse(data) : [];
-        }
-
-        // 保存済みコメントを読み込んで表示する関数
-        function loadComments() {
-            const comments = getComments();
-            if (comments.length > 0) {
-                // 「まだコメントはありません」のメッセージを隠す
-                const empty = document.getElementById('commentEmpty');
-                if (empty) empty.style.display = 'none';
-
-                comments.forEach(c => addCommentToDOM(c));
-            }
-        }
-
-        // コメントをDOMに追加して表示する関数
-        function addCommentToDOM(comment) {
-            const list = document.getElementById('commentList');
-            const empty = document.getElementById('commentEmpty');
-            if (empty) empty.style.display = 'none';
-
-            // コメントのHTML構造を作る
-            const bubble = document.createElement('div');
-            bubble.className = 'comment-bubble';
-            bubble.innerHTML = `
-                <div class="comment-name">${escapeHTML(comment.name)}</div>
-                <div class="comment-text">${escapeHTML(comment.text)}</div>
-                <div class="comment-time">${escapeHTML(comment.time)}</div>
-            `;
-
-            list.appendChild(bubble);
-            // 自動的に最新のコメントまでスクロール
-            list.scrollTop = list.scrollHeight;
-        }
-
-        // HTMLの特殊文字をエスケープする関数（安全対策）
-        function escapeHTML(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
     </script>
 </body>
 
