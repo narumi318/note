@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eNu　思考を文字に、未来を形に</title>
+    <!-- Google Fontsの読み込み -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Inter:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* =========================================
+           1. 基本設定（Base）
+           ========================================= */
+        :root {
+            --primary-color: #000000;
+            --accent-color: #41c9b4;
+            --text-color: #333333;
+            --bg-color: #ffffff;
+            --gray-bg: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.8;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =========================================
+           2. アニメーション定義（派手な文字演出）
+           ========================================= */
+
+        /* フェードイン（下から浮き上がる） */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ヒーローのタイトル：1文字ずつ登場するアニメーション */
+        @keyframes charReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(60px) rotateX(90deg);
+                filter: blur(8px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+                filter: blur(0);
+            }
+        }
+
+        .hero-char {
+            display: inline-block;
+            opacity: 0;
+            animation: charReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* セクションタイトルのグラデーション＋光るアニメーション */
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .section-title-animated {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 60px;
+            text-align: center;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg,
+                    var(--primary-color) 0%,
+                    var(--accent-color) 25%,
+                    var(--primary-color) 50%,
+                    var(--accent-color) 75%,
+                    var(--primary-color) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+
+        /* カウントアップ風のランキング番号 */
+        @keyframes numberPop {
+            0% {
+                transform: scale(0) rotate(-20deg);
+                opacity: 0;
+            }
+
+            60% {
+                transform: scale(1.3) rotate(5deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .rank-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            margin-right: 12px;
+            flex-shrink: 0;
+            opacity: 0;
+        }
+
+        .rank-number.is-visible {
+            animation: numberPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .rank-1 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+
+        .rank-2 {
+            background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+        }
+
+        .rank-3 {
+            background: linear-gradient(135deg, #CD7F32, #A0522D);
+        }
+
+        .rank-4,
+        .rank-5,
+        .rank-6 {
+            background: linear-gradient(135deg, var(--accent-color), #2d9e8b);
+        }
+
+        /* タイピング風のアンダーライン */
+        @keyframes underlineExpand {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* =========================================
+           3. ヘッダー（Header）+ ナビゲーションタブ
+           ========================================= */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        /* ナビゲーションタブ */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-tab {
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #555;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            color: var(--primary-color);
+            background-color: rgba(65, 201, 180, 0.08);
+        }
+
+        .nav-tab:hover::after {
+            width: 60%;
+        }
+
+        .header-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .header-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(65, 201, 180, 0.3);
+        }
+
+        /* =========================================
+           4. ヒーローセクション
+           ========================================= */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+            background-color: #111;
+        }
+
+        /* 背景画像（最初は非表示、ポップアップ後にフェードイン） */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('hero-bg.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 1s ease;
+        }
+
+        .hero-bg.active {
+            opacity: 0.35;
+        }
+
+        /* 暗いオーバーレイ（文字を読みやすくする） */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
+            z-index: 2;
+        }
+
+        /* ポップアップ画像（中央にドーンと登場） */
+        .hero-popup-img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: min(70vw, 500px);
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            opacity: 0;
+        }
+
+        /* ポップアップ登場アニメーション */
+        @keyframes popupIn {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(-5deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.05) rotate(1deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* ポップアップ→背景化アニメーション */
+        @keyframes popupToBg {
+            0% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                opacity: 1;
+                border-radius: 16px;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(2.5);
+                opacity: 0;
+                border-radius: 0;
+            }
+        }
+
+        .hero-popup-img.popup-in {
+            animation: popupIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-popup-img.popup-to-bg {
+            animation: popupToBg 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* テキスト要素のz-index（背景の上に表示する） */
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .hero-content.show {
+            opacity: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: white;
+            letter-spacing: -2px;
+            perspective: 500px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero p {
+            font-size: clamp(16px, 2vw, 22px);
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.8);
+            opacity: 0;
+        }
+
+        .hero p.show {
+            animation: charReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* =========================================
+           5. セクション共通
+           ========================================= */
+        section {
+            padding: 100px 10%;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 60px;
+            color: var(--primary-color);
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        /* =========================================
+           6. Mission
+           ========================================= */
+        .mission {
+            background-color: var(--bg-color);
+            text-align: center;
+        }
+
+        .mission-text {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 700;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            letter-spacing: -1px;
+        }
+
+        /* =========================================
+           7. Pick Up（人気記事ランキング）
+           ========================================= */
+        .pickup {
+            background-color: var(--gray-bg);
+        }
+
+        .pickup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .pickup-card {
+            background-color: white;
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pickup-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border-color: var(--accent-color);
+        }
+
+        .pickup-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .pickup-card-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .pickup-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            color: var(--primary-color);
+        }
+
+        .pickup-card-desc {
+            font-size: 14px;
+            color: #777;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .pickup-card-link {
+            display: inline-block;
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .pickup-card-link:hover {
+            opacity: 0.7;
+            transform: translateX(4px);
+        }
+
+        /* =========================================
+           8. Categories
+           ========================================= */
+        .categories {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .categories .section-title-animated {
+            -webkit-text-fill-color: white;
+            background: linear-gradient(90deg,
+                    white 0%,
+                    var(--accent-color) 25%,
+                    white 50%,
+                    var(--accent-color) 75%,
+                    white 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .category-item {
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            padding-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover {
+            border-top-color: var(--accent-color);
+            transform: translateY(-8px);
+        }
+
+        .category-item h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .category-item p {
+            color: #bdc3c7;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* =========================================
+           9. Join Us
+           ========================================= */
+        .join-us {
+            text-align: center;
+            background-color: var(--gray-bg);
+            padding: 100px 5%;
+        }
+
+        .join-us h2 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        .btn-large {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            padding: 24px 70px;
+            border-radius: 50px;
+            margin-top: 40px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-large:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(65, 201, 180, 0.3);
+        }
+
+        /* =========================================
+           10. コメント欄（チャット風）
+           ========================================= */
+        .comment-section {
+            background-color: var(--bg-color);
+            padding: 100px 10%;
+        }
+
+        .comment-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .comment-list {
+            max-height: 500px;
+            overflow-y: auto;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--gray-bg);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        /* スクロールバーのデザイン */
+        .comment-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .comment-list::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 3px;
+        }
+
+        .comment-bubble {
+            background-color: white;
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            animation: commentSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes commentSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(16px) scale(0.97);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .comment-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--accent-color);
+            margin-bottom: 6px;
+        }
+
+        .comment-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .comment-time {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 8px;
+        }
+
+        .comment-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #aaa;
+            font-size: 15px;
+        }
+
+        /* コメント入力フォーム */
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: border-color 0.3s;
+            outline: none;
+            background-color: var(--gray-bg);
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            border-color: var(--accent-color);
+            background-color: white;
+        }
+
+        .comment-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .comment-submit {
+            align-self: flex-end;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .comment-submit:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(65, 201, 180, 0.3);
+        }
+
+        .comment-submit:active {
+            transform: scale(0.97);
+        }
+
+        /* =========================================
+           11. フッター
+           ========================================= */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 14px;
+            border-top: 1px solid #333;
+        }
+
+        /* =========================================
+           12. レスポンシブ対応（スマホ向け）
+           ========================================= */
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .header-left {
+                gap: 16px;
+            }
+
+            .nav-tabs {
+                gap: 4px;
+            }
+
+            .nav-tab {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .header-btn {
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+
+            .pickup-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-item {
+                padding-top: 20px;
+            }
+
+            .btn-large {
+                padding: 18px 50px;
+                font-size: 16px;
+            }
+
+            section {
+                padding: 60px 6%;
+            }
+
+            .section-title,
+            .section-title-animated {
+                font-size: 32px;
+                margin-bottom: 40px;
+            }
+
+            .comment-section {
+                padding: 60px 6%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. ヘッダー（ナビゲーションタブ付き） -->
+    <header>
+        <div class="header-left">
+            <div class="logo">eNu</div>
+            <!-- ナビゲーションタブ -->
+            <nav class="nav-tabs">
+                <a href="#mission" class="nav-tab">Mission</a>
+                <a href="#pickup" class="nav-tab">Pick Up</a>
+                <a href="#categories" class="nav-tab">Categories</a>
+            </nav>
+        </div>
+        <a href="https://note.com/enu_318_/all" target="_blank" class="header-btn">noteを読む</a>
+    </header>
+
+    <!-- 2. ヒーローセクション -->
+    <section class="hero">
+        <!-- 背景画像レイヤー -->
+        <div class="hero-bg" id="heroBg"></div>
+        <!-- 暗いオーバーレイ -->
+        <div class="hero-overlay"></div>
+        <!-- ポップアップ画像（最初に中央にドーンと登場する） -->
+        <img src="hero-bg.png" alt="" class="hero-popup-img" id="heroPopup">
+        <!-- テキストコンテンツ（画像の後に表示される） -->
+        <div class="hero-content" id="heroContent">
+            <h1 id="hero-title"></h1>
+            <p id="heroSubtitle">eNu - note creator</p>
+        </div>
+    </section>
+
+    <!-- 3. Missionセクション -->
+    <section class="mission" id="mission">
+        <h2 class="section-title-animated fade-in">Mission</h2>
+        <p class="mission-text fade-in" style="transition-delay: 0.1s;">
+            日常の些細な出来事から、<br>
+            政治・歴史、哲学的な考察まで。<br>
+            多様な視点で世界を切り取り、<br>
+            言葉を通して、新たな視点を提供します。
+        </p>
+    </section>
+
+    <!-- 4. Pick Upセクション（おすすめ記事4つ） -->
+    <section class="pickup" id="pickup">
+        <h2 class="section-title-animated fade-in">Pick Up</h2>
+        <div class="pickup-grid">
+
+            <!-- 記事1：中編小説『四月の残響』 -->
+            <div class="pickup-card fade-in">
+                <div class="pickup-card-header">
+                    <span class="pickup-card-label">小説</span>
+                </div>
+                <h3 class="pickup-card-title">中編小説『四月の残響』</h3>
+                <p class="pickup-card-desc">四月の空気に溶け込んだ記憶と感情。季節の移ろいの中で、過去と現在が交差する中編小説。</p>
+                <a href="https://note.com/enu_318_/n/nee6661e90a90" target="_blank" class="pickup-card-link">記事を読む →</a>
+            </div>
+
+            <!-- 記事2：エッセイ『弱音を吐けないまま大人になった僕へ』 -->
+            <div class="pickup-card fade-in" style="transition-delay: 0.1s;">
+                <div class="pickup-card-header">
+                    <span class="pickup-card-label">エッセイ</span>
+                </div>
+                <h3 class="pickup-card-title">エッセイ『弱音を吐けないまま大人になった僕へ』</h3>
+                <p class="pickup-card-desc">長男として育った環境から、本音や弱音を隠すことに慣れてしまった。過去の自分と今の自分に向き合い、言葉を紡いだエッセイ。</p>
+                <a href="https://note.com/enu_318_/n/nd60937cceea3" target="_blank" class="pickup-card-link">記事を読む →</a>
+            </div>
+
+            <!-- 記事3：依存を恐れながら依存してしまう私たちへ -->
+            <div class="pickup-card fade-in" style="transition-delay: 0.2s;">
+                <div class="pickup-card-header">
+                    <span class="pickup-card-label">考察・思想</span>
+                </div>
+                <h3 class="pickup-card-title">依存を恐れながら依存してしまう私たちへ</h3>
+                <p class="pickup-card-desc">誰かを求めることへの恐れと、それでも離れられない心の揺れ。依存と自立の狭間で揺れる私たちへの考察。</p>
+                <a href="https://note.com/enu_318_/n/nc3594d3bcc54" target="_blank" class="pickup-card-link">記事を読む →</a>
+            </div>
+
+            <!-- 記事4：エッセイ『心は効率化できない』 -->
+            <div class="pickup-card fade-in" style="transition-delay: 0.3s;">
+                <div class="pickup-card-header">
+                    <span class="pickup-card-label">エッセイ</span>
+                </div>
+                <h3 class="pickup-card-title">エッセイ『心は効率化できない』</h3>
+                <p class="pickup-card-desc">効率を追い求める社会の中で「心だけは効率化できない」という気づき。感情との付き合い方を考えるエッセイ。</p>
+                <a href="https://note.com/enu_318_/n/n595ccb65daa9" target="_blank" class="pickup-card-link">記事を読む →</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. Categoriesセクション -->
+    <section class="categories" id="categories">
+        <h2 class="section-title-animated fade-in">Categories</h2>
+        <div class="category-grid">
+            <div class="category-item fade-in">
+                <h3>エッセイ</h3>
+                <p>日常の中で感じたこと、気づきを丁寧な言葉で紡ぎ、共感を生むストーリーを届けます。</p>
+            </div>
+            <div class="category-item fade-in" style="transition-delay: 0.1s;">
+                <h3>小説</h3>
+                <p>日常の延長線上にある物語や、心に響く言葉を綴った創作小説をお届けします。</p>
+            </div>
+            <div class="category-item fade-in" style="transition-delay: 0.2s;">
+                <h3>書評</h3>
+                <p>小説から実用書まで。一冊の本から得た有益な知見や感情を、独自の視点で共有します。</p>
+            </div>
+            <div class="category-item fade-in" style="transition-delay: 0.3s;">
+                <h3>政治・歴史</h3>
+                <p>過去の出来事から現在を読み解き、複雑な事象をシンプルかつ論理的な視点で整理します。</p>
+            </div>
+            <div class="category-item fade-in" style="transition-delay: 0.4s;">
+                <h3>考察・思想</h3>
+                <p>物事の本質は何か。当たり前を疑い、様々な角度から深く思考を巡らせる記事です。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Join Usセクション -->
+    <section class="join-us">
+        <h2 class="fade-in">すべての記事を読む</h2>
+        <p class="fade-in" style="transition-delay: 0.1s; color: #555; font-size: 18px;">
+            noteにて、より深く、より多くの記事を定期的に公開しています。</p>
+        <div class="fade-in" style="transition-delay: 0.2s;">
+            <a href="https://note.com/enu_318_/all" target="_blank" class="btn-large">noteへ移動する</a>
+        </div>
+    </section>
+
+    <!-- 7. コメント欄（チャット機能） -->
+    <section class="comment-section" id="comments">
+        <h2 class="section-title-animated fade-in">Comments</h2>
+        <div class="comment-container">
+            <!-- コメント一覧（チャット風にメッセージが並ぶ場所） -->
+            <div class="comment-list" id="commentList">
+                <div class="comment-empty" id="commentEmpty">
+                    まだコメントはありません。<br>最初のコメントを書いてみましょう！
+                </div>
+            </div>
+
+            <!-- コメント入力フォーム -->
+            <div class="comment-form" id="commentForm">
+                <input type="text" id="commentName" placeholder="名前（ニックネーム）" maxlength="30">
+                <textarea id="commentText" placeholder="コメントを入力してください..." maxlength="500"></textarea>
+                <button class="comment-submit" onclick="postComment()">コメントを送信</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. フッター -->
+    <footer>
+        <p>&copy; 2026 eNu. All Rights Reserved.</p>
+    </footer>
+
+    <!-- =========================================
+         JavaScript（動きの制御）
+         ========================================= -->
+    <script>
+        // =============================================
+        // 【1】ヒーロー演出：画像ポップアップ → 背景化 → タイトルアニメーション
+        // =============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const popup = document.getElementById('heroPopup');
+            const heroBg = document.getElementById('heroBg');
+            const heroContent = document.getElementById('heroContent');
+            const heroSubtitle = document.getElementById('heroSubtitle');
+            const heroTitle = document.getElementById('hero-title');
+
+            // ステップ1：0.3秒後に画像がポップアップして中央に登場
+            setTimeout(() => {
+                popup.classList.add('popup-in');
+            }, 300);
+
+            // ステップ2：2秒後に画像が拡大しながらフェードアウト（背景に溶け込む）
+            setTimeout(() => {
+                popup.classList.remove('popup-in');
+                popup.classList.add('popup-to-bg');
+                // 同時に背景画像をフェードインさせる
+                heroBg.classList.add('active');
+            }, 2000);
+
+            // ステップ3：3秒後にテキストコンテンツを表示し、1文字ずつアニメーション開始
+            setTimeout(() => {
+                heroContent.classList.add('show');
+
+                // タイトルテキストを1文字ずつ生成する
+                const titleText = '人生の分岐点に立つ\n26歳の備忘録。';
+                let charIndex = 0;
+                titleText.split('').forEach((char) => {
+                    if (char === '\n') {
+                        heroTitle.appendChild(document.createElement('br'));
+                    } else {
+                        const span = document.createElement('span');
+                        span.textContent = char;
+                        span.className = 'hero-char';
+                        span.style.animationDelay = `${charIndex * 0.05 + 0.2}s`;
+                        heroTitle.appendChild(span);
+                        charIndex++;
+                    }
+                });
+
+                // サブタイトルも少し遅れて表示
+                setTimeout(() => {
+                    heroSubtitle.classList.add('show');
+                }, 1200);
+            }, 3000);
+
+            // =============================================
+            // 【2】スクロール時のフェードイン
+            // =============================================
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const rankNumbers = document.querySelectorAll('.rank-number');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            // フェードイン要素の監視を開始
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // ランキング番号の監視を開始
+            rankNumbers.forEach(element => {
+                observer.observe(element);
+            });
+
+            // =============================================
+            // 【3】保存済みのコメントを読み込む
+            // =============================================
+            loadComments();
+        });
+
+        // =============================================
+        // 【4】コメント機能（ローカルストレージに保存）
+        // =============================================
+
+        // コメントを投稿する関数
+        function postComment() {
+            const nameInput = document.getElementById('commentName');
+            const textInput = document.getElementById('commentText');
+
+            // 名前とコメントの入力チェック
+            const name = nameInput.value.trim() || '匿名';
+            const text = textInput.value.trim();
+
+            if (!text) {
+                // コメントが空の場合は何もしない
+                textInput.style.borderColor = '#ff6b6b';
+                setTimeout(() => {
+                    textInput.style.borderColor = 'rgba(0,0,0,0.08)';
+                }, 1500);
+                return;
+            }
+
+            // 現在時刻を取得して表示用にフォーマットする
+            const now = new Date();
+            const timeStr = `${now.getFullYear()}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+            // コメントデータを作成
+            const comment = { name, text, time: timeStr };
+
+            // ローカルストレージに保存
+            const comments = getComments();
+            comments.push(comment);
+            localStorage.setItem('enu_comments', JSON.stringify(comments));
+
+            // コメントを画面に追加表示
+            addCommentToDOM(comment);
+
+            // 入力フォームをクリア
+            nameInput.value = '';
+            textInput.value = '';
+        }
+
+        // ローカルストレージからコメントを取得する関数
+        function getComments() {
+            const data = localStorage.getItem('enu_comments');
+            return data ? JSON.parse(data) : [];
+        }
+
+        // 保存済みコメントを読み込んで表示する関数
+        function loadComments() {
+            const comments = getComments();
+            if (comments.length > 0) {
+                // 「まだコメントはありません」のメッセージを隠す
+                const empty = document.getElementById('commentEmpty');
+                if (empty) empty.style.display = 'none';
+
+                comments.forEach(c => addCommentToDOM(c));
+            }
+        }
+
+        // コメントをDOMに追加して表示する関数
+        function addCommentToDOM(comment) {
+            const list = document.getElementById('commentList');
+            const empty = document.getElementById('commentEmpty');
+            if (empty) empty.style.display = 'none';
+
+            // コメントのHTML構造を作る
+            const bubble = document.createElement('div');
+            bubble.className = 'comment-bubble';
+            bubble.innerHTML = `
+                <div class="comment-name">${escapeHTML(comment.name)}</div>
+                <div class="comment-text">${escapeHTML(comment.text)}</div>
+                <div class="comment-time">${escapeHTML(comment.time)}</div>
+            `;
+
+            list.appendChild(bubble);
+            // 自動的に最新のコメントまでスクロール
+            list.scrollTop = list.scrollHeight;
+        }
+
+        // HTMLの特殊文字をエスケープする関数（安全対策）
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>
