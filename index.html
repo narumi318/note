@@ -662,7 +662,13 @@
     <!-- 4. Pick Upセクション（おすすめ記事4つ） -->
     <section class="pickup" id="pickup">
         <h2 class="section-title-animated fade-in">Pick Up</h2>
-
+        <style>
+            .pickup-card-date {
+                font-size: 12px;
+                color: #999;
+                margin-bottom: 8px;
+            }
+        </style>
         <div class="pickup-grid">
 
             <!-- 最新記事1（JSで動的に書き換えます） -->
@@ -670,6 +676,7 @@
                 <div class="pickup-card-header">
                     <span class="pickup-card-label">最新記事</span>
                 </div>
+                <div class="pickup-card-date" style="display: none;"></div>
                 <h3 class="pickup-card-title">読み込み中...</h3>
                 <p class="pickup-card-desc">最新の記事を取得しています。</p>
                 <a href="https://note.com/enu_318_/all" target="_blank" class="pickup-card-link">記事を読む →</a>
@@ -680,6 +687,7 @@
                 <div class="pickup-card-header">
                     <span class="pickup-card-label">最新記事</span>
                 </div>
+                <div class="pickup-card-date" style="display: none;"></div>
                 <h3 class="pickup-card-title">読み込み中...</h3>
                 <p class="pickup-card-desc">最新の記事を取得しています。</p>
                 <a href="https://note.com/enu_318_/all" target="_blank" class="pickup-card-link">記事を読む →</a>
@@ -840,6 +848,14 @@
                         const card1 = document.getElementById('latest-article-1');
                         if (card1) {
                             card1.querySelector('.pickup-card-title').textContent = item1.title;
+                            // 日付のフォーマット (YYYY-MM-DD)
+                            if (item1.pubDate) {
+                                const date1 = new Date(item1.pubDate);
+                                const dateStr1 = `${date1.getFullYear()}.${String(date1.getMonth() + 1).padStart(2, '0')}.${String(date1.getDate()).padStart(2, '0')} 更新`;
+                                const dateElem1 = card1.querySelector('.pickup-card-date');
+                                dateElem1.textContent = dateStr1;
+                                dateElem1.style.display = 'block';
+                            }
                             // 本文からHTMLタグを除去し、短くカットして概要にする
                             let desc1 = item1.description.replace(/<[^>]+>/g, '').trim();
                             desc1 = desc1.length > 50 ? desc1.substring(0, 50) + '...' : desc1;
@@ -852,6 +868,14 @@
                         const card2 = document.getElementById('latest-article-2');
                         if (card2) {
                             card2.querySelector('.pickup-card-title').textContent = item2.title;
+                            // 日付のフォーマット (YYYY-MM-DD)
+                            if (item2.pubDate) {
+                                const date2 = new Date(item2.pubDate);
+                                const dateStr2 = `${date2.getFullYear()}.${String(date2.getMonth() + 1).padStart(2, '0')}.${String(date2.getDate()).padStart(2, '0')} 更新`;
+                                const dateElem2 = card2.querySelector('.pickup-card-date');
+                                dateElem2.textContent = dateStr2;
+                                dateElem2.style.display = 'block';
+                            }
                             let desc2 = item2.description.replace(/<[^>]+>/g, '').trim();
                             desc2 = desc2.length > 50 ? desc2.substring(0, 50) + '...' : desc2;
                             card2.querySelector('.pickup-card-desc').textContent = desc2;
